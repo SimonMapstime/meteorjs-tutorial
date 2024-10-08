@@ -17,6 +17,14 @@ export const App = () => {
       sort: { createdAt: -1 },
     }).fetch()
   );
+  // Used to show how many uncompleted tasks are still to do on the title of the page
+  const pendingTaskCount = useTracker(() => {
+    TaskCollection.find(hideCompletedFilter).count();
+  });
+  // Display value of our task count
+  const pendingTaskTitle = `${
+    pendingTaskCount ? ` (${pendingTaskCount})` : ""
+  }`;
   // Handle Callback Function of the status of the task
   const handleToggleChecked = ({ _id, isChecked }) => {
     Meteor.callAsync("tasks.toggleChecked", { _id, isChecked });
@@ -35,7 +43,7 @@ export const App = () => {
         <div className="app-bar">
           <div className="app-header">
             {" "}
-            <h1>📜 ToDo List !</h1>
+            <h1>📜 ToDo List !{pendingTaskTitle}</h1>
           </div>
         </div>
       </header>
