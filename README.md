@@ -59,3 +59,53 @@ Meteor.methods({
 ```
 4. Importer le fichier côté serveur dans `server/main.js` et côté client dans `client/main.jsx`
 
+> [!WARNING]
+> 
+> Attention, dans certains cas, il faut utiliser le keyword funcction afin de définir un callback pour les méthods Meteor.
+> 
+> Par exemple, lorsque l'on ajoute la protection des données relative à l'utilisateur, le code suivant nous renvoie une erreur `this.ready is not a function` :
+> ```js
+> Meteor.publish("tasks", () => {
+>    const userId = this.userId;
+>    if (!userId) {
+>        return this.ready();
+>   }
+>    return TaskCollection.find({userId});
+> })
+> ```
+> Cela est dû à l'héritage par défaut de la valeur de `this` entre les fonction basiques et les fonctions fléchées. Le code suivant ne nous renvoit pas d'erreurs :
+>
+> ```js
+>Meteor.publish("tasks", function () {
+>  const userId = this.userId;
+>  if (!userId) {
+>    return this.ready();
+>  }
+>  return TaskCollection.find({ userId });
+> });
+> ```
+### Debug de l'application
+
+Meteor.js propose diverse façon de pouvoir débugguer son application.
+
+- `console.log()` permet de pouvoir log des informations côté client & server.
+- `meteor shell` permet de connecter un shell sur l'application et de pouvoir ainsi tester le code côté serveur.
+- 
+
+// Meteor.publish("tasks", () => {
+    // console.log(this);
+//     const userId = this.userId;
+//     if (!userId) {
+//         return this.ready();
+//     }
+//     return TaskCollection.find({userId});
+// })
+
+// We need to use the function keyword to make it work.
+Meteor.publish("tasks", function () {
+  const userId = this.userId;
+  if (!userId) {
+    return this.ready();
+  }
+  return TaskCollection.find({ userId });
+});

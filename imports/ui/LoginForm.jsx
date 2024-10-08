@@ -21,12 +21,13 @@ const LoginForm = () => {
       />
       <label htmlFor="">Password</label>
       <input
-        type="text"
+        type="password"
         placeholder="Password"
         name="password"
         required
         onChange={(e) => setPassword(e.target.value)}
       />
+      <button type="submit">Login</button>
     </form>
   );
 };

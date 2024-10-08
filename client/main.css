@@ -134,3 +134,13 @@ header {
   justify-self: flex-end;
   background-color: #ff3046;
 }
+
+.user {
+  display: flex;
+
+  align-self: flex-end;
+
+  margin: 8px 16px 0;
+  font-weight: bold;
+  cursor: pointer;
+}

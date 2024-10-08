@@ -22,7 +22,11 @@ const tasks = [
 ];
 
 const insertTask = (task) => {
-  TaskCollection.insertAsync({ text: task.text });
+  TaskCollection.insertAsync({
+     text: task.text,
+     user_id: user._id,
+     createdAt: new Date(),
+    });
 };
 
 Meteor.startup(async () => {
@@ -33,6 +37,7 @@ Meteor.startup(async () => {
       password: SEED_PASSWORD,
     })
   }
+  const user = await Accounts.findUserByUsername(SEED_USERNAME);
   // Used to wipe the table from his data
   // TaskCollection.removeAsync({});
   if ((await TaskCollection.find().countAsync()) === 0) {

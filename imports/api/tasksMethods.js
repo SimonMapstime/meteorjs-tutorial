@@ -3,7 +3,10 @@ import { TaskCollection } from "./TasksCollection";
 
 Meteor.methods({
   "tasks.insert"(doc) {
-    return TaskCollection.insertAsync(doc);
+    return TaskCollection.insertAsync({
+      ...doc,
+      userId: this.userId,
+    });
   },
   "tasks.toggleChecked"({ _id, isChecked }) {
     return TaskCollection.updateAsync(_id, {
