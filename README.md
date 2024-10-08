@@ -84,28 +84,11 @@ Meteor.methods({
 >  return TaskCollection.find({ userId });
 > });
 > ```
+> Plus d'informations disponibles [ici](https://www.codementor.io/@dariogarciamoya/understanding-this-in-javascript-with-arrow-functions-gcpjwfyuc)
 ### Debug de l'application
 
 Meteor.js propose diverse façon de pouvoir débugguer son application.
 
 - `console.log()` permet de pouvoir log des informations côté client & server.
 - `meteor shell` permet de connecter un shell sur l'application et de pouvoir ainsi tester le code côté serveur.
-- 
-
-// Meteor.publish("tasks", () => {
-    // console.log(this);
-//     const userId = this.userId;
-//     if (!userId) {
-//         return this.ready();
-//     }
-//     return TaskCollection.find({userId});
-// })
-
-// We need to use the function keyword to make it work.
-Meteor.publish("tasks", function () {
-  const userId = this.userId;
-  if (!userId) {
-    return this.ready();
-  }
-  return TaskCollection.find({ userId });
-});
+- Utiliser le chrome dev tools.
